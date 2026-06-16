@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import {
   TrendingUp, Shield, Video, Users, Award, BookOpen,
-  ArrowRight, ChevronRight, Globe,
+  ArrowRight, Globe,
 } from 'lucide-react';
 
 /* ── Ticker ─────────────────────────────────────── */
-const TICKER = [
+const TICKER_ITEMS = [
   'Copy Trading', 'Financial Education', 'Community Growth',
   'Leadership Development', 'Weekly Live Sessions', 'Free Trial Available',
   'BonChat Platform', '5-Person Teams', 'Wednesday Night Zoom',
@@ -13,7 +13,7 @@ const TICKER = [
 ];
 
 function Ticker() {
-  const doubled = [...TICKER, ...TICKER];
+  const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS];
   return (
     <div className="ticker" aria-hidden="true">
       <div className="ticker__track">
@@ -28,23 +28,7 @@ function Ticker() {
   );
 }
 
-/* ── Data ────────────────────────────────────────── */
-const features = [
-  { Icon: TrendingUp, title: 'Automated Copy Trading',  desc: 'Automatically replicate trades from experienced traders with a single click — no active management required.' },
-  { Icon: Shield,     title: 'Beginner-Friendly Setup', desc: 'No prior trading experience needed. We guide every new member through onboarding with patience and clarity.' },
-  { Icon: Video,      title: 'Weekly Live Sessions',    desc: 'Professor Daniel hosts live Wednesday Zoom sessions — market insights, strategy Q&A, and financial literacy.' },
-  { Icon: Users,      title: 'Community Network',       desc: 'Connect with members at weekend events, interactive games, team-building sessions, and networking gatherings.' },
-  { Icon: Award,      title: 'Leadership Growth',       desc: 'Develop real leadership through structured programs, mentorship, and team development opportunities.' },
-  { Icon: BookOpen,   title: 'Financial Education',     desc: 'Build lasting financial literacy through ongoing education, trading knowledge, and structured learning resources.' },
-];
-
-const steps = [
-  { n: '01', title: 'Join The Community',   desc: 'Register and connect with PO Wealth.' },
-  { n: '02', title: 'Setup Your Account',   desc: 'Create and securely connect your trading account.' },
-  { n: '03', title: 'Start Copy Trading',   desc: 'Automatically mirror trades from experienced traders.' },
-  { n: '04', title: 'Learn & Grow',         desc: 'Join weekly trainings and community activities.' },
-];
-
+/* ── Testimonials data ─────────────────────────── */
 const testimonials = [
   {
     initial: 'M', name: 'Michael A.',
@@ -64,34 +48,26 @@ export default function HomePage() {
   return (
     <div className="page-wrapper">
 
-      {/* ── HERO ── */}
+      {/* ══ HERO ══════════════════════════════════════════ */}
       <section className="hero">
-        {/* Ambient blobs */}
-        <div className="hero__blob hero__blob--a" />
-        <div className="hero__blob hero__blob--b" />
 
-        {/* Ripple circles */}
-        <div className="hero__ripples">
-          <div className="hero__ripple hero__ripple--1" />
-          <div className="hero__ripple hero__ripple--2" />
-          <div className="hero__ripple hero__ripple--3" />
-        </div>
-
-        {/* Grid */}
-        <div className="hero__grid" />
-
-        <div className="hero__content">
-          <span className="eyebrow hero__eyebrow">PO Wealth · Financial Growth Community</span>
+        {/* Left — editorial typography column */}
+        <div className="hero__left">
+          <div className="hero__badge">
+            <span className="hero__badge-dot" />
+            PO Wealth · Financial Growth Community
+          </div>
 
           <h1 className="hero__title">
-            Build Wealth<br />
-            <em>Together</em> Through<br />
-            Smart Copy Trading
+            <span className="hero__line"><span>Build Wealth,</span></span>
+            <span className="hero__line">
+              <span>Grow <em className="hero__title-accent">Together.</em></span>
+            </span>
           </h1>
 
           <p className="hero__lead">
-            Copy trading, live education, leadership growth, and a real community —
-            all in one place to help you grow confidently in the financial markets.
+            Copy trading, live education, and a genuine community — all in one place
+            so you can grow confidently in the financial markets, starting free.
           </p>
 
           <div className="hero__ctas">
@@ -102,74 +78,171 @@ export default function HomePage() {
               How It Works
             </Link>
           </div>
+
+          <div className="hero__scroll">
+            <span className="hero__scroll-label">Scroll</span>
+            <div className="hero__scroll-line" />
+          </div>
         </div>
 
-        <div className="hero__scroll">
-          <span className="hero__scroll-label">Scroll</span>
-          <div className="hero__scroll-line" />
+        {/* Right — forest green panel with floating platform cards */}
+        <div className="hero__right">
+          <div className="hero-cards">
+
+            {/* Back card — faintest, most tilted */}
+            <div className="hero-pcard hero-pcard--back">
+              <div className="pcard-header">
+                <span className="pcard-tag">Community</span>
+              </div>
+              <div className="pcard-name">PO Wealth</div>
+              <div className="pcard-sub">Financial Growth Community</div>
+            </div>
+
+            {/* Mid card — zoom session */}
+            <div className="hero-pcard hero-pcard--mid">
+              <div className="pcard-zoom-top">
+                <div className="pcard-zoom-icon"><Video size={14} /></div>
+                <div>
+                  <div className="pcard-zoom-name">Wednesday Zoom</div>
+                  <div className="pcard-zoom-when">Every week · 8 PM</div>
+                </div>
+              </div>
+              <div className="pcard-zoom-body">
+                Live session with Professor Daniel — market insights, Q&amp;A, and financial strategy.
+              </div>
+            </div>
+
+            {/* Front card — copy trading, most detail */}
+            <div className="hero-pcard hero-pcard--front">
+              <div className="pcard-header">
+                <span className="pcard-live" />
+                <span className="pcard-tag"><strong>Copy Trading</strong> · Active</span>
+              </div>
+              <div className="pcard-name">Auto Copy Trading</div>
+              <div className="pcard-sub">BonChat Platform</div>
+              <div className="pcard-list">
+                {['1-click setup', 'Auto-mirrors expert trades', 'No experience needed', 'Free to start'].map(item => (
+                  <div key={item} className="pcard-item">
+                    <span className="pcard-check">✓</span>
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
 
-      {/* ── TICKER ── */}
+      {/* ══ TICKER ══════════════════════════════════════ */}
       <Ticker />
 
-      {/* ── FEATURES ── */}
+      {/* ══ FEATURES — BENTO GRID ══════════════════════ */}
       <section className="section bg-white">
         <div className="container">
-          <div className="section-header text-center reveal">
+          <div className="section-header reveal">
             <span className="eyebrow">What We Offer</span>
-            <h2 className="h2">More Than Just Copy Trading</h2>
-            <div className="copper-rule copper-rule--center" />
-            <p className="lead max-640" style={{ marginTop: 12 }}>
-              We enable members to replicate trades from seasoned traders while building market
-              knowledge in a beginner-friendly, community-driven environment.
+            <h2 className="h2">
+              More Than Just{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--copper)' }}>Copy Trading</em>
+            </h2>
+            <div className="copper-rule" />
+            <p className="lead" style={{ maxWidth: 500, marginTop: 12 }}>
+              A complete financial growth ecosystem — trading, education, community,
+              and leadership in one place.
             </p>
           </div>
 
-          <div className="grid-3">
-            {features.map(({ Icon, title, desc }, i) => (
-              <div key={title} className={`feature-card reveal d${i + 1}`}>
-                <div className="feature-icon"><Icon size={22} /></div>
-                <div className="feature-title">{title}</div>
-                <div className="feature-desc">{desc}</div>
+          <div className="bento">
+            {/* ── Main hero card — Copy Trading, 2×2 ── */}
+            <div className="bcard bcard--dark bcard--main reveal d1">
+              <div className="bcard-icon"><TrendingUp size={22} /></div>
+              <div className="bcard-title">Automated Copy Trading</div>
+              <div className="bcard-desc">
+                Mirror trades from experienced investors with a single click on the BonChat
+                platform — no active management required, no guesswork.
               </div>
-            ))}
+              <div className="bcard-divider" />
+              <div className="bcard-stats">
+                <div>
+                  <div className="bcard-stat-label">Setup Time</div>
+                  <div className="bcard-stat-val">5 min</div>
+                </div>
+                <div>
+                  <div className="bcard-stat-label">Experience</div>
+                  <div className="bcard-stat-val">None</div>
+                </div>
+              </div>
+              <div className="bcard-checks">
+                {[
+                  '1-click setup on BonChat',
+                  'Auto-mirrors expert trades in real time',
+                  'No active management needed',
+                  'Start with a free trial',
+                ].map(c => (
+                  <div key={c} className="bcard-check">
+                    <span className="bcard-check-mark">✓</span>
+                    {c}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* ── Row 1 col 3 — Beginner Friendly ── */}
+            <div className="bcard reveal d2">
+              <div className="bcard-icon"><Shield size={20} /></div>
+              <div className="bcard-title">Beginner Friendly</div>
+              <div className="bcard-desc">
+                No prior trading experience required. We guide every new member through
+                setup with patience and clarity.
+              </div>
+            </div>
+
+            {/* ── Row 2 col 3 — Zoom Sessions ── */}
+            <div className="bcard reveal d3">
+              <div className="bcard-icon"><Video size={20} /></div>
+              <div className="bcard-title">Live Zoom Sessions</div>
+              <div className="bcard-desc">
+                Professor Daniel hosts Wednesday night sessions — market insights,
+                trading Q&amp;A, and financial literacy for every level.
+              </div>
+            </div>
+
+            {/* ── Row 3 col 1 — Community ── */}
+            <div className="bcard reveal d2">
+              <div className="bcard-icon"><Users size={20} /></div>
+              <div className="bcard-title">Community Network</div>
+              <div className="bcard-desc">
+                Weekend events, team games, networking gatherings, and a genuine
+                community that grows together.
+              </div>
+            </div>
+
+            {/* ── Row 3 col 2 — Leadership ── */}
+            <div className="bcard reveal d3">
+              <div className="bcard-icon"><Award size={20} /></div>
+              <div className="bcard-title">Leadership Growth</div>
+              <div className="bcard-desc">
+                Structured programs, mentorship, and team development to build
+                real leadership skills alongside your wealth.
+              </div>
+            </div>
+
+            {/* ── Row 3 col 3 — Education ── */}
+            <div className="bcard reveal d4">
+              <div className="bcard-icon"><BookOpen size={20} /></div>
+              <div className="bcard-title">Financial Education</div>
+              <div className="bcard-desc">
+                Build lasting financial literacy through ongoing education, trading
+                knowledge, and structured resources.
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
+      {/* ══ EDUCATION SPOTLIGHT ════════════════════════ */}
       <section className="section bg-surface">
-        <div className="container">
-          <div className="section-header text-center reveal">
-            <span className="eyebrow">Simple Process</span>
-            <h2 className="h2">How PO Wealth Works</h2>
-            <div className="copper-rule copper-rule--center" />
-            <p className="lead max-640" style={{ marginTop: 12 }}>
-              Four straightforward steps to go from curious newcomer to active participant.
-            </p>
-          </div>
-
-          <div className="steps-overview reveal d1">
-            {steps.map(s => (
-              <div key={s.n} className="step-item">
-                <div className="step-circle">{s.n}</div>
-                <div className="step-title">{s.title}</div>
-                <p className="step-desc">{s.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-xl reveal">
-            <Link to="/how-it-works" className="btn btn--outline">
-              Full Details <ChevronRight size={16} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── EDUCATION SPOTLIGHT ── */}
-      <section className="section bg-white">
         <div className="container">
           <div className="edu-split">
             <div className="reveal">
@@ -182,7 +255,7 @@ export default function HomePage() {
                 member, no experience required.
               </p>
               <div className="edu-tags mb-xl">
-                {['Market Insights','Trading Concepts','Live Q&A','Market Updates','Financial Literacy','Member Success'].map(t => (
+                {['Market Insights', 'Trading Concepts', 'Live Q&A', 'Market Updates', 'Financial Literacy', 'Member Success'].map(t => (
                   <span key={t} className="tag">{t}</span>
                 ))}
               </div>
@@ -207,15 +280,13 @@ export default function HomePage() {
                     <div className="zoom-card__hrole">Lead Educator &amp; Host</div>
                   </div>
                 </div>
-                <div className="zoom-card__topics">
-                  <div className="zoom-card__topic-label">Session Topics</div>
-                  {['Live Market Analysis', 'Trading Strategy Q&A', 'Member Success Stories', 'Financial Literacy Deep-Dives'].map(t => (
-                    <div key={t} className="zoom-card__row">
-                      <span className="zoom-card__row-dot" />
-                      {t}
-                    </div>
-                  ))}
-                </div>
+                <div className="zoom-card__topic-label">Session Topics</div>
+                {['Live Market Analysis', 'Trading Strategy Q&A', 'Member Success Stories', 'Financial Literacy Deep-Dives'].map(t => (
+                  <div key={t} className="zoom-card__row">
+                    <span className="zoom-card__row-dot" />
+                    {t}
+                  </div>
+                ))}
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 16, fontSize: '0.78rem', color: 'var(--dim)' }}>
                   <Globe size={13} />
                   Open to all PO Wealth members
@@ -226,8 +297,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── */}
-      <section className="section bg-surface">
+      {/* ══ TESTIMONIALS ════════════════════════════════ */}
+      <section className="section bg-white">
         <div className="container">
           <div className="section-header text-center reveal">
             <span className="eyebrow">Member Stories</span>
@@ -253,7 +324,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA FOREST ── */}
+      {/* ══ CTA FOREST ══════════════════════════════════ */}
       <section className="section--sm">
         <div className="container">
           <div className="cta-forest reveal">

@@ -44,7 +44,7 @@ function RevealManager() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL.replace(/\/$/, '')}>
       <RevealManager />
       <Navbar />
       <main>
