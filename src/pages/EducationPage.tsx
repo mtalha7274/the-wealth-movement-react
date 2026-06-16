@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle, Video, Calendar, Users, ArrowRight } from 'lucide-react';
+import poWealthLogo from '../assets/po-wealth-sharing.png';
+import poWealthInfo from '../assets/po-wealth-sharing-info.png';
 
 const benefits = [
   'Quick response to changes in the market',
@@ -109,6 +111,56 @@ export default function EducationPage() {
                   {activities.map(a => <span key={a} className="tag">{a}</span>)}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PO WEALTH SHARING BRAND ── */}
+      <section className="section bg-surface">
+        <div className="container">
+          <div className="section-header text-center reveal">
+            <span className="eyebrow">PO Wealth Sharing</span>
+            <h2 className="h2">Standards Define Who We Become</h2>
+            <div className="copper-rule copper-rule--center" />
+            <p className="lead max-640" style={{ marginTop: 12 }}>
+              The PO Wealth Sharing program extends the five-person duplication framework into
+              structured team growth — where standards, mentorship, and consistent development
+              shape both your network and your long-term earning potential.
+            </p>
+          </div>
+
+          <div className="media-showcase media-showcase--brand reveal d2">
+            <div className="media-showcase__frame">
+              <img
+                src={poWealthLogo}
+                alt="PO Wealth Sharing logo with the tagline Standards Define Who We Become"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── REWARD STRUCTURE ── */}
+      <section id="po-wealth-sharing" className="section bg-white">
+        <div className="container">
+          <div className="section-header text-center reveal">
+            <span className="eyebrow">Reward Structure</span>
+            <h2 className="h2">Build Your Agent Network</h2>
+            <div className="copper-rule copper-rule--center" />
+            <p className="lead max-640" style={{ marginTop: 12 }}>
+              Unlock weekly income and promotion rewards as you grow your direct members
+              and team across ten achievement levels.
+            </p>
+          </div>
+
+          <div className="media-showcase media-showcase--wide reveal d2">
+            <div className="media-showcase__frame">
+              <img
+                src={poWealthInfo}
+                alt="PO Wealth Sharing level chart showing LV1 through LV10 direct members, team members, weekly salary, and promotion bonus rewards"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>

@@ -1,24 +1,24 @@
 import { Link } from 'react-router-dom';
-import { UserPlus, Shield, TrendingUp, GraduationCap, Clock, Banknote, RefreshCw, AlertTriangle, ArrowRight } from 'lucide-react';
+import { TrendingUp, Clock, Banknote, RefreshCw, AlertTriangle, ArrowRight } from 'lucide-react';
 
 const steps = [
   {
-    Icon: UserPlus, num: '01',
+    num: '01',
     title: 'Join The Community',
     desc: 'Register and connect with PO Wealth. Get access to the platform, community channels, and introductory resources to get you fully oriented from day one.',
   },
   {
-    Icon: Shield, num: '02',
+    num: '02',
     title: 'Setup Your Trading Account',
     desc: 'Create and securely connect your trading account. Our team walks you through the BonChat setup process step by step to ensure everything is properly linked.',
   },
   {
-    Icon: TrendingUp, num: '03',
+    num: '03',
     title: 'Start Copy Trading',
     desc: 'Automatically mirror trades from experienced traders. Once connected, the copy trading system works for you — no active decision-making or monitoring required.',
   },
   {
-    Icon: GraduationCap, num: '04',
+    num: '04',
     title: 'Learn & Grow',
     desc: 'Attend weekly Wednesday Zoom trainings with Professor Daniel, engage with the community, and develop your financial knowledge and leadership over time.',
   },
@@ -53,14 +53,11 @@ export default function HowItWorksPage() {
       <section className="section bg-white">
         <div className="container">
           <div className="stack stack--lg max-760">
-            {steps.map(({ Icon, num, title, desc }, i) => (
+            {steps.map(({ num, title, desc }, i) => (
               <div key={num} className={`process-step reveal d${i + 1}`}>
                 <div className="process-num">{num}</div>
                 <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                    <Icon size={19} style={{ color: 'var(--copper)', flexShrink: 0 }} />
-                    <h3 className="process-title" style={{ margin: 0 }}>{title}</h3>
-                  </div>
+                  <h3 className="process-title">{title}</h3>
                   <p className="process-desc">{desc}</p>
                 </div>
               </div>
@@ -107,6 +104,14 @@ export default function HowItWorksPage() {
               Beyond copy trading, members have the opportunity to earn additional income by
               building and developing a team within the PO Wealth community. As your team grows,
               so does your earning potential through the 5-person duplication system.
+            </p>
+            <p style={{ marginTop: 16 }}>
+              <Link
+                to="/education#po-wealth-sharing"
+                style={{ fontSize: '0.9375rem', color: 'var(--copper)', fontWeight: 500 }}
+              >
+                View full reward structure →
+              </Link>
             </p>
           </div>
         </div>
