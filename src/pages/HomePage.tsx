@@ -1,33 +1,10 @@
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import type { LucideIcon } from 'lucide-react';
 import {
   TrendingUp, Shield, Video, Users, Award, BookOpen,
   ArrowRight, Globe,
 } from 'lucide-react';
-
-/* ── Ticker ─────────────────────────────────────── */
-const TICKER_ITEMS = [
-  'Copy Trading', 'Financial Education', 'Community Growth',
-  'Leadership Development', 'Weekly Live Sessions', 'Free Trial Available',
-  'BonChat Platform', '5-Person Teams', 'Wednesday Night Zoom',
-  'Stock Market Access', 'Professor Daniel',
-];
-
-function Ticker() {
-  const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS];
-  return (
-    <div className="ticker" aria-hidden="true">
-      <div className="ticker__track">
-        {doubled.map((item, i) => (
-          <span key={i} className="ticker__item">
-            {item}
-            <span className="ticker__dot" />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 const heroFeatures: {
   key: string;
@@ -93,6 +70,115 @@ const testimonials = [
 ];
 
 export default function HomePage() {
+  const mobileRailRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const rail = mobileRailRef.current;
+    if (!rail) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileMq = window.matchMedia('(max-width: 1080px)');
+
+    let currentIndex = 0;
+    let isPaused = false;
+    let isAutoScrolling = false;
+    let resumeTimeout: number | undefined;
+    let scrollSyncTimeout: number | undefined;
+    let intervalId: number | undefined;
+
+    const getCards = () => Array.from(rail.querySelectorAll<HTMLElement>('.hero-mobile__card'));
+
+    const getCardScrollLeft = (card: HTMLElement) => {
+      const track = card.parentElement;
+      if (!track) return 0;
+      return card.offsetLeft - track.offsetLeft;
+    };
+
+    const syncIndexToScroll = () => {
+      const cards = getCards();
+      if (!cards.length) return;
+
+      currentIndex = cards.reduce((closestIndex, card, index) => {
+        const closestDistance = Math.abs(getCardScrollLeft(cards[closestIndex]) - rail.scrollLeft);
+        const cardDistance = Math.abs(getCardScrollLeft(card) - rail.scrollLeft);
+        return cardDistance < closestDistance ? index : closestIndex;
+      }, 0);
+    };
+
+    const pauseAutoScroll = () => {
+      if (isAutoScrolling) return;
+
+      isPaused = true;
+      window.clearTimeout(resumeTimeout);
+      resumeTimeout = window.setTimeout(() => {
+        syncIndexToScroll();
+        isPaused = false;
+      }, 5000);
+    };
+
+    const scrollToIndex = (index: number) => {
+      const cards = getCards();
+      if (!cards.length || !mobileMq.matches) return;
+
+      currentIndex = ((index % cards.length) + cards.length) % cards.length;
+      isAutoScrolling = true;
+      rail.scrollTo({ left: getCardScrollLeft(cards[currentIndex]), behavior: 'smooth' });
+      window.setTimeout(() => {
+        isAutoScrolling = false;
+      }, 600);
+    };
+
+    const tick = () => {
+      if (!isPaused && mobileMq.matches && !reducedMotion.matches) {
+        scrollToIndex(currentIndex + 1);
+      }
+    };
+
+    const stopAutoScroll = () => {
+      window.clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoScroll = () => {
+      stopAutoScroll();
+      if (!mobileMq.matches || reducedMotion.matches) return;
+      syncIndexToScroll();
+      intervalId = window.setInterval(tick, 3500);
+    };
+
+    const onScroll = () => {
+      window.clearTimeout(scrollSyncTimeout);
+      scrollSyncTimeout = window.setTimeout(syncIndexToScroll, 80);
+      if (!isAutoScrolling) pauseAutoScroll();
+    };
+
+    const onLayoutChange = () => {
+      if (mobileMq.matches) startAutoScroll();
+      else stopAutoScroll();
+    };
+
+    rail.addEventListener('pointerdown', pauseAutoScroll, { passive: true });
+    rail.addEventListener('touchstart', pauseAutoScroll, { passive: true });
+    rail.addEventListener('wheel', pauseAutoScroll, { passive: true });
+    rail.addEventListener('scroll', onScroll, { passive: true });
+    mobileMq.addEventListener('change', onLayoutChange);
+    reducedMotion.addEventListener('change', onLayoutChange);
+
+    onLayoutChange();
+
+    return () => {
+      stopAutoScroll();
+      window.clearTimeout(resumeTimeout);
+      window.clearTimeout(scrollSyncTimeout);
+      rail.removeEventListener('pointerdown', pauseAutoScroll);
+      rail.removeEventListener('touchstart', pauseAutoScroll);
+      rail.removeEventListener('wheel', pauseAutoScroll);
+      rail.removeEventListener('scroll', onScroll);
+      mobileMq.removeEventListener('change', onLayoutChange);
+      reducedMotion.removeEventListener('change', onLayoutChange);
+    };
+  }, []);
+
   return (
     <div className="page-wrapper">
 
@@ -102,11 +188,10 @@ export default function HomePage() {
         <div className="hero__left">
           <div className="hero__badge">
             <span className="hero__badge-dot" />
-            Live education · Copy trading · Community growth
+            Live education · Copy trading · Community<span className="hero__badge-growth"> growth</span>
           </div>
 
           <h1 className="hero__title">
-            <span className="hero__line"><span>Move With</span></span>
             <span className="hero__line">
               <span>The <em className="hero__title-accent">Wealth</em> Movement.</span>
             </span>
@@ -140,11 +225,13 @@ export default function HomePage() {
             </div>
 
             {heroFeatures.map(({ key, modifier, label, title, text, Icon, meta }) => (
-              <div key={key} className={`orbit-card ${modifier}`}>
-                <div className="orbit-card__label">{label}</div>
-                <div className="orbit-card__title">{title}</div>
-                <p className="orbit-card__text">{text}</p>
-                <div className="orbit-card__meta"><Icon size={15} /> {meta}</div>
+              <div key={key} className={`orbit-card-wrap ${modifier}`} tabIndex={0}>
+                <div className="orbit-card">
+                  <div className="orbit-card__label">{label}</div>
+                  <div className="orbit-card__title">{title}</div>
+                  <p className="orbit-card__text">{text}</p>
+                  <div className="orbit-card__meta"><Icon size={15} /> {meta}</div>
+                </div>
               </div>
             ))}
           </div>
@@ -160,7 +247,7 @@ export default function HomePage() {
 
             <p className="hero-mobile__hint">Swipe through the platform</p>
 
-            <div className="hero-mobile__rail-wrap">
+            <div className="hero-mobile__rail-wrap" ref={mobileRailRef}>
               <div className="hero-mobile__rail">
               {heroFeatures.map(({ key, label, title, text, Icon, meta }) => (
                 <div key={key} className="hero-mobile__card">
@@ -173,26 +260,8 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-
-          <div className="hero-proof">
-            <div className="hero-proof__item">
-              <span className="hero-proof__value">Free</span>
-              <span className="hero-proof__label">trial access for new members</span>
-            </div>
-            <div className="hero-proof__item">
-              <span className="hero-proof__value">5-person</span>
-              <span className="hero-proof__label">team framework for momentum</span>
-            </div>
-            <div className="hero-proof__item">
-              <span className="hero-proof__value">Weekly</span>
-              <span className="hero-proof__label">live education and support</span>
-            </div>
-          </div>
         </div>
       </section>
-
-      {/* ══ TICKER ══════════════════════════════════════ */}
-      <Ticker />
 
       {/* ══ FEATURES — BENTO GRID ══════════════════════ */}
       <section className="section bg-white">
@@ -385,7 +454,6 @@ export default function HomePage() {
       <section className="section--sm">
         <div className="container">
           <div className="cta-forest reveal">
-            <span className="cta-forest__eyebrow">Limited Time Offer</span>
             <h2 className="cta-forest__title">
               Start Your Free Trial <em>Today</em>
             </h2>

@@ -82,22 +82,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ── SOCIAL ── */}
-      <section className="section--sm bg-surface">
-        <div className="container text-center">
-          <span className="eyebrow" style={{ display: 'block', marginBottom: 14 }}>Follow Us</span>
-          <h2 className="h2 reveal" style={{ marginBottom: 32 }}>
-            Stay Connected on Social Media
-          </h2>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: 14, flexWrap: 'wrap' }}
-               className="reveal d2">
-            {['Facebook', 'Instagram', 'TikTok'].map(p => (
-              <a key={p} href="#" className="btn btn--ghost btn--lg">{p}</a>
-            ))}
-          </div>
-        </div>
-      </section>
-
     </div>
   );
 }

@@ -4,12 +4,12 @@ import poWealthLogo from '../assets/po-wealth-sharing.png';
 import poWealthInfo from '../assets/po-wealth-sharing-info.png';
 
 const benefits = [
-  'Quick response to changes in the market',
-  'Efficient, flexible operations',
-  'Full utilization of member skills and experience',
-  'Enhanced creativity and execution',
-  'Faster decision-making and greater agility',
-  'Stronger trust and team cohesion',
+  'Shared learning through the 5-person duplication system',
+  'Weekly Wednesday Zoom sessions with Professor Daniel',
+  'Guided BonChat copy trading setup from day one',
+  'Weekend events, team building, and community gatherings',
+  'Leadership growth as your network expands',
+  'PO Wealth Sharing reward levels for team builders',
 ];
 
 const activities = ['Weekend Events', 'Interactive Games', 'Leadership Programs', 'Team Building', 'Networking Events', 'Community Gatherings'];
@@ -116,45 +116,28 @@ export default function EducationPage() {
         </div>
       </section>
 
-      {/* ── PO WEALTH SHARING BRAND ── */}
-      <section className="section bg-surface">
+      {/* ── PO WEALTH SHARING ── */}
+      <section id="po-wealth-sharing" className="section bg-surface">
         <div className="container">
-          <div className="section-header text-center reveal">
-            <span className="eyebrow">PO Wealth Sharing</span>
-            <h2 className="h2">Standards Define Who We Become</h2>
-            <div className="copper-rule copper-rule--center" />
-            <p className="lead max-640" style={{ marginTop: 12 }}>
-              The PO Wealth Sharing program extends the five-person duplication framework into
-              structured team growth — where standards, mentorship, and consistent development
-              shape both your network and your long-term earning potential.
-            </p>
-          </div>
-
-          <div className="media-showcase media-showcase--brand reveal d2">
-            <div className="media-showcase__frame">
+          <div className="wealth-sharing-intro reveal">
+            <div className="wealth-sharing-intro__logo">
               <img
                 src={poWealthLogo}
                 alt="PO Wealth Sharing logo with the tagline Standards Define Who We Become"
               />
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── REWARD STRUCTURE ── */}
-      <section id="po-wealth-sharing" className="section bg-white">
-        <div className="container">
-          <div className="section-header text-center reveal">
-            <span className="eyebrow">Reward Structure</span>
-            <h2 className="h2">Build Your Agent Network</h2>
-            <div className="copper-rule copper-rule--center" />
-            <p className="lead max-640" style={{ marginTop: 12 }}>
-              Unlock weekly income and promotion rewards as you grow your direct members
-              and team across ten achievement levels.
-            </p>
+            <div className="wealth-sharing-intro__copy">
+              <span className="eyebrow">PO Wealth Sharing</span>
+              <h2 className="h2">Build Your Agent Network</h2>
+              <div className="copper-rule" />
+              <p className="lead" style={{ marginTop: 12 }}>
+                The five-person duplication framework extends into structured team growth —
+                unlock weekly income and promotion rewards across ten achievement levels.
+              </p>
+            </div>
           </div>
 
-          <div className="media-showcase media-showcase--wide reveal d2">
+          <div className="media-showcase media-showcase--wide reveal d2" style={{ marginTop: 40 }}>
             <div className="media-showcase__frame">
               <img
                 src={poWealthInfo}
