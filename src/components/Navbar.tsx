@@ -28,8 +28,7 @@ export default function Navbar() {
     return () => { document.body.style.overflow = ''; };
   }, [open]);
 
-  // Close on route change or viewport resize past breakpoint
-  useEffect(() => { setOpen(false); }, [pathname]);
+  // Close on viewport resize past breakpoint
   useEffect(() => {
     const onResize = () => { if (window.innerWidth > 920) setOpen(false); };
     window.addEventListener('resize', onResize);
@@ -43,27 +42,30 @@ export default function Navbar() {
           The&nbsp;<em>Wealth</em>&nbsp;Movement
         </Link>
 
-        <ul className={`navbar__nav${open ? ' navbar__nav--open' : ''}`}>
+        <ul id="site-navigation" className={`navbar__nav${open ? ' navbar__nav--open' : ''}`}>
           {links.map(l => (
             <li key={l.to}>
               <Link
                 to={l.to}
                 className={`navbar__link${pathname === l.to ? ' navbar__link--active' : ''}`}
+                onClick={() => setOpen(false)}
               >
                 {l.label}
               </Link>
             </li>
           ))}
           <li className="navbar__cta">
-            <Link to="/join-us" className="btn btn--primary btn--sm">Join Free</Link>
+            <Link to="/join-us" className="btn btn--primary btn--sm" onClick={() => setOpen(false)}>Join Free</Link>
           </li>
         </ul>
 
         <button
+          type="button"
           className="navbar__toggle"
           onClick={() => setOpen(o => !o)}
           aria-label="Toggle menu"
           aria-expanded={open}
+          aria-controls="site-navigation"
         >
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>

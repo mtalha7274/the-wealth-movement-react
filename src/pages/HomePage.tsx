@@ -51,23 +51,22 @@ export default function HomePage() {
       {/* ══ HERO ══════════════════════════════════════════ */}
       <section className="hero">
 
-        {/* Left — editorial typography column */}
         <div className="hero__left">
           <div className="hero__badge">
             <span className="hero__badge-dot" />
-            PO Wealth · Financial Growth Community
+            Live education · Copy trading · Community growth
           </div>
 
           <h1 className="hero__title">
-            <span className="hero__line"><span>Build Wealth,</span></span>
+            <span className="hero__line"><span>Move With</span></span>
             <span className="hero__line">
-              <span>Grow <em className="hero__title-accent">Together.</em></span>
+              <span>The <em className="hero__title-accent">Wealth</em> Movement.</span>
             </span>
           </h1>
 
           <p className="hero__lead">
-            Copy trading, live education, and a genuine community — all in one place
-            so you can grow confidently in the financial markets, starting free.
+            A refined financial growth community where beginner-friendly copy trading,
+            weekly live education, and real accountability work together from day one.
           </p>
 
           <div className="hero__ctas">
@@ -78,58 +77,67 @@ export default function HomePage() {
               How It Works
             </Link>
           </div>
-
-          <div className="hero__scroll">
-            <span className="hero__scroll-label">Scroll</span>
-            <div className="hero__scroll-line" />
-          </div>
         </div>
 
-        {/* Right — forest green panel with floating platform cards */}
         <div className="hero__right">
-          <div className="hero-cards">
-
-            {/* Back card — faintest, most tilted */}
-            <div className="hero-pcard hero-pcard--back">
-              <div className="pcard-header">
-                <span className="pcard-tag">Community</span>
-              </div>
-              <div className="pcard-name">PO Wealth</div>
-              <div className="pcard-sub">Financial Growth Community</div>
-            </div>
-
-            {/* Mid card — zoom session */}
-            <div className="hero-pcard hero-pcard--mid">
-              <div className="pcard-zoom-top">
-                <div className="pcard-zoom-icon"><Video size={14} /></div>
-                <div>
-                  <div className="pcard-zoom-name">Wednesday Zoom</div>
-                  <div className="pcard-zoom-when">Every week · 8 PM</div>
-                </div>
-              </div>
-              <div className="pcard-zoom-body">
-                Live session with Professor Daniel — market insights, Q&amp;A, and financial strategy.
+          <div className="hero-orbit" aria-label="PO Wealth platform highlights">
+            <div className="orbit-core">
+              <div>
+                <span className="orbit-core__kicker">PO Wealth System</span>
+                <div className="orbit-core__title">Learn. Copy. Grow.</div>
+                <p className="orbit-core__text">
+                  One guided environment for market access, education, and community momentum.
+                </p>
               </div>
             </div>
 
-            {/* Front card — copy trading, most detail */}
-            <div className="hero-pcard hero-pcard--front">
-              <div className="pcard-header">
-                <span className="pcard-live" />
-                <span className="pcard-tag"><strong>Copy Trading</strong> · Active</span>
-              </div>
-              <div className="pcard-name">Auto Copy Trading</div>
-              <div className="pcard-sub">BonChat Platform</div>
-              <div className="pcard-list">
-                {['1-click setup', 'Auto-mirrors expert trades', 'No experience needed', 'Free to start'].map(item => (
-                  <div key={item} className="pcard-item">
-                    <span className="pcard-check">✓</span>
-                    {item}
-                  </div>
-                ))}
-              </div>
+            <div className="orbit-card orbit-card--copy">
+              <div className="orbit-card__label">Copy Trading</div>
+              <div className="orbit-card__title">Mirror expert moves automatically.</div>
+              <p className="orbit-card__text">Start with a guided setup and let the system follow active trading signals.</p>
+              <div className="orbit-card__meta"><TrendingUp size={15} /> BonChat Platform</div>
             </div>
 
+            <div className="orbit-card orbit-card--team">
+              <div className="orbit-card__label">Community</div>
+              <div className="orbit-card__title">Teams that keep you moving.</div>
+              <p className="orbit-card__text">A five-person structure creates accountability, learning, and real support.</p>
+              <div className="orbit-card__meta"><Users size={15} /> Team Growth</div>
+            </div>
+
+            <div className="orbit-card orbit-card--education">
+              <div className="orbit-card__label">Education</div>
+              <div className="orbit-card__title">Financial literacy without confusion.</div>
+              <p className="orbit-card__text">Simple resources and live walkthroughs help new members understand the market.</p>
+              <div className="orbit-card__meta"><BookOpen size={15} /> Beginner Friendly</div>
+            </div>
+
+            <div className="orbit-card orbit-card--session">
+              <div className="orbit-card__label">Live Sessions</div>
+              <div className="orbit-card__title">Wednesday Zoom with Professor Daniel.</div>
+              <p className="orbit-card__text">Weekly market insight, Q&amp;A, and strategy for every experience level.</p>
+              <div className="orbit-card__meta"><Video size={15} /> Every Week</div>
+            </div>
+          </div>
+
+          <div className="hero-proof">
+            <div className="hero-proof__item">
+              <span className="hero-proof__value">Free</span>
+              <span className="hero-proof__label">trial access for new members</span>
+            </div>
+            <div className="hero-proof__item">
+              <span className="hero-proof__value">5-person</span>
+              <span className="hero-proof__label">team framework for momentum</span>
+            </div>
+            <div className="hero-proof__item">
+              <span className="hero-proof__value">Weekly</span>
+              <span className="hero-proof__label">live education and support</span>
+            </div>
+          </div>
+
+          <div className="hero__scroll">
+            <span className="hero__scroll-label">Explore</span>
+            <div className="hero__scroll-line" />
           </div>
         </div>
       </section>
@@ -143,13 +151,13 @@ export default function HomePage() {
           <div className="section-header reveal">
             <span className="eyebrow">What We Offer</span>
             <h2 className="h2">
-              More Than Just{' '}
-              <em style={{ fontStyle: 'italic', color: 'var(--copper)' }}>Copy Trading</em>
+              A Complete Growth System,{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--copper)' }}>Not Just Signals</em>
             </h2>
             <div className="copper-rule" />
-            <p className="lead" style={{ maxWidth: 500, marginTop: 12 }}>
-              A complete financial growth ecosystem — trading, education, community,
-              and leadership in one place.
+            <p className="lead" style={{ maxWidth: 560, marginTop: 12 }}>
+              Trading access, live education, community structure, and leadership development
+              designed to make growth feel clear instead of chaotic.
             </p>
           </div>
 
