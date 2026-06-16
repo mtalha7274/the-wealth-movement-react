@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import type { LucideIcon } from 'lucide-react';
 import {
   TrendingUp, Shield, Video, Users, Award, BookOpen,
   ArrowRight, Globe,
@@ -27,6 +28,53 @@ function Ticker() {
     </div>
   );
 }
+
+const heroFeatures: {
+  key: string;
+  modifier: string;
+  label: string;
+  title: string;
+  text: string;
+  Icon: LucideIcon;
+  meta: string;
+}[] = [
+  {
+    key: 'copy',
+    modifier: 'orbit-card--copy',
+    label: 'Copy Trading',
+    title: 'Mirror expert moves automatically.',
+    text: 'Start with a guided setup and let the system follow active trading signals.',
+    Icon: TrendingUp,
+    meta: 'BonChat Platform',
+  },
+  {
+    key: 'team',
+    modifier: 'orbit-card--team',
+    label: 'Community',
+    title: 'Teams that keep you moving.',
+    text: 'A five-person structure creates accountability, learning, and real support.',
+    Icon: Users,
+    meta: 'Team Growth',
+  },
+  {
+    key: 'education',
+    modifier: 'orbit-card--education',
+    label: 'Education',
+    title: 'Financial literacy without confusion.',
+    text: 'Simple resources and live walkthroughs help new members understand the market.',
+    Icon: BookOpen,
+    meta: 'Beginner Friendly',
+  },
+  {
+    key: 'session',
+    modifier: 'orbit-card--session',
+    label: 'Live Sessions',
+    title: 'Wednesday Zoom with Professor Daniel.',
+    text: 'Weekly market insight, Q&A, and strategy for every experience level.',
+    Icon: Video,
+    meta: 'Every Week',
+  },
+];
 
 /* ── Testimonials data ─────────────────────────── */
 const testimonials = [
@@ -80,7 +128,7 @@ export default function HomePage() {
         </div>
 
         <div className="hero__right">
-          <div className="hero-orbit" aria-label="PO Wealth platform highlights">
+          <div className="hero-orbit hero-orbit--desktop" aria-label="PO Wealth platform highlights">
             <div className="orbit-core">
               <div>
                 <span className="orbit-core__kicker">PO Wealth System</span>
@@ -91,32 +139,38 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="orbit-card orbit-card--copy">
-              <div className="orbit-card__label">Copy Trading</div>
-              <div className="orbit-card__title">Mirror expert moves automatically.</div>
-              <p className="orbit-card__text">Start with a guided setup and let the system follow active trading signals.</p>
-              <div className="orbit-card__meta"><TrendingUp size={15} /> BonChat Platform</div>
+            {heroFeatures.map(({ key, modifier, label, title, text, Icon, meta }) => (
+              <div key={key} className={`orbit-card ${modifier}`}>
+                <div className="orbit-card__label">{label}</div>
+                <div className="orbit-card__title">{title}</div>
+                <p className="orbit-card__text">{text}</p>
+                <div className="orbit-card__meta"><Icon size={15} /> {meta}</div>
+              </div>
+            ))}
+          </div>
+
+          <div className="hero-mobile" aria-label="PO Wealth mobile highlights">
+            <div className="hero-mobile__featured">
+              <span className="hero-mobile__kicker">PO Wealth System</span>
+              <div className="hero-mobile__title">Learn. Copy. Grow.</div>
+              <p className="hero-mobile__text">
+                One guided environment for market access, education, and community momentum.
+              </p>
             </div>
 
-            <div className="orbit-card orbit-card--team">
-              <div className="orbit-card__label">Community</div>
-              <div className="orbit-card__title">Teams that keep you moving.</div>
-              <p className="orbit-card__text">A five-person structure creates accountability, learning, and real support.</p>
-              <div className="orbit-card__meta"><Users size={15} /> Team Growth</div>
-            </div>
+            <p className="hero-mobile__hint">Swipe through the platform</p>
 
-            <div className="orbit-card orbit-card--education">
-              <div className="orbit-card__label">Education</div>
-              <div className="orbit-card__title">Financial literacy without confusion.</div>
-              <p className="orbit-card__text">Simple resources and live walkthroughs help new members understand the market.</p>
-              <div className="orbit-card__meta"><BookOpen size={15} /> Beginner Friendly</div>
-            </div>
-
-            <div className="orbit-card orbit-card--session">
-              <div className="orbit-card__label">Live Sessions</div>
-              <div className="orbit-card__title">Wednesday Zoom with Professor Daniel.</div>
-              <p className="orbit-card__text">Weekly market insight, Q&amp;A, and strategy for every experience level.</p>
-              <div className="orbit-card__meta"><Video size={15} /> Every Week</div>
+            <div className="hero-mobile__rail-wrap">
+              <div className="hero-mobile__rail">
+              {heroFeatures.map(({ key, label, title, text, Icon, meta }) => (
+                <div key={key} className="hero-mobile__card">
+                  <div className="hero-mobile__card-label">{label}</div>
+                  <div className="hero-mobile__card-title">{title}</div>
+                  <p className="hero-mobile__card-text">{text}</p>
+                  <div className="hero-mobile__card-meta"><Icon size={15} /> {meta}</div>
+                </div>
+              ))}
+              </div>
             </div>
           </div>
 
@@ -133,11 +187,6 @@ export default function HomePage() {
               <span className="hero-proof__value">Weekly</span>
               <span className="hero-proof__label">live education and support</span>
             </div>
-          </div>
-
-          <div className="hero__scroll">
-            <span className="hero__scroll-label">Explore</span>
-            <div className="hero__scroll-line" />
           </div>
         </div>
       </section>

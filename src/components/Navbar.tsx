@@ -36,7 +36,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
+    <nav className={`navbar${scrolled ? ' navbar--scrolled' : ''}${open ? ' navbar--open' : ''}`}>
       <div className="navbar__inner">
         <Link to="/" className="navbar__brand">
           The&nbsp;<em>Wealth</em>&nbsp;Movement
@@ -70,6 +70,13 @@ export default function Navbar() {
           {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
+      <button
+        type="button"
+        className="navbar__scrim"
+        aria-label="Close menu"
+        tabIndex={open ? 0 : -1}
+        onClick={() => setOpen(false)}
+      />
     </nav>
   );
 }
