@@ -26,100 +26,78 @@ const contacts = [
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="page-wrapper">
+
       {/* ── PAGE HERO ── */}
       <section className="page-hero">
         <div className="container">
-          <div className="eyebrow">Get In Touch</div>
-          <h1 className="display-title">
-            Contact <span className="text-gold">PO Wealth</span>
+          <span className="eyebrow">Get In Touch</span>
+          <h1 className="h1">
+            Contact <span className="text-copper" style={{ fontStyle: 'italic' }}>PO Wealth</span>
           </h1>
-          <div className="gold-divider" />
-          <p className="section-subtitle">
-            We're here to help you get started. Reach out through any of the channels below and
+          <div className="copper-rule copper-rule--center" />
+          <p className="lead max-640" style={{ marginTop: 12 }}>
+            We're here to help you get started. Reach out through any channel below and
             our team will get back to you promptly.
           </p>
         </div>
       </section>
 
       {/* ── CONTACT OPTIONS ── */}
-      <section className="section bg-surface">
+      <section className="section bg-white">
         <div className="container">
-          <div className="stack stack--lg max-700">
-            {contacts.map(({ Icon, label, value, desc, href }) => (
+          <div className="stack stack--lg max-640">
+            {contacts.map(({ Icon, label, value, desc, href }, i) => (
               <a
                 key={label}
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="contact-card"
+                className={`contact-card reveal d${i + 1}`}
               >
-                <div className="contact-icon">
-                  <Icon size={26} />
-                </div>
+                <div className="contact-icon"><Icon size={24} /></div>
                 <div style={{ flex: 1 }}>
                   <div className="contact-label">{label}</div>
                   <div className="contact-value">{value}</div>
                   <div className="contact-desc">{desc}</div>
                 </div>
-                <div className="contact-arrow">
-                  <ArrowRight size={20} />
-                </div>
+                <div className="contact-arrow"><ArrowRight size={20} /></div>
               </a>
             ))}
           </div>
 
           {/* Note */}
-          <div className="max-700 mt-2xl">
+          <div className="max-640 mt-2xl reveal">
             <div className="quote-block">
-              <p
-                style={{
-                  color: 'var(--text-muted)', lineHeight: '1.75',
-                  fontStyle: 'italic', fontSize: '1rem',
-                }}
-              >
+              <p style={{
+                color: 'var(--muted)', lineHeight: 1.78,
+                fontStyle: 'italic', fontSize: '1rem',
+              }}>
                 Our team typically responds within a few hours. Don't hesitate to reach out with
-                any questions about the platform, copy trading, community events, or the free trial
-                — we're genuinely happy to help.
+                questions about the platform, copy trading, community events, or the free trial —
+                we're genuinely happy to help.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ── SOCIAL STRIP ── */}
-      <section className="section--sm">
-        <div className="container">
-          <div style={{ textAlign: 'center' }}>
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>Follow Us</div>
-            <h2
-              style={{
-                fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.5rem, 3vw, 2.25rem)',
-                fontWeight: 700, marginBottom: '32px',
-              }}
-            >
-              Stay Connected on Social Media
-            </h2>
-            <div
-              style={{
-                display: 'flex', justifyContent: 'center',
-                gap: '16px', flexWrap: 'wrap',
-              }}
-            >
-              {['Facebook', 'Instagram', 'TikTok'].map(platform => (
-                <a
-                  key={platform}
-                  href="#"
-                  className="btn btn--ghost"
-                  style={{ minWidth: '140px' }}
-                >
-                  {platform}
-                </a>
-              ))}
-            </div>
+      {/* ── SOCIAL ── */}
+      <section className="section--sm bg-surface">
+        <div className="container text-center">
+          <span className="eyebrow" style={{ display: 'block', marginBottom: 14 }}>Follow Us</span>
+          <h2 className="h2 reveal" style={{ marginBottom: 32 }}>
+            Stay Connected on Social Media
+          </h2>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: 14, flexWrap: 'wrap' }}
+               className="reveal d2">
+            {['Facebook', 'Instagram', 'TikTok'].map(p => (
+              <a key={p} href="#" className="btn btn--ghost btn--lg">{p}</a>
+            ))}
           </div>
         </div>
       </section>
-    </>
+
+    </div>
   );
 }

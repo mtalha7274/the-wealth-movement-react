@@ -1,160 +1,137 @@
 import { Link } from 'react-router-dom';
 import {
   TrendingUp, Shield, Video, Users, Award, BookOpen,
-  ArrowRight, ChevronRight, Globe, Zap,
+  ArrowRight, ChevronRight, Globe,
 } from 'lucide-react';
 
+/* ── Ticker ─────────────────────────────────────── */
+const TICKER = [
+  'Copy Trading', 'Financial Education', 'Community Growth',
+  'Leadership Development', 'Weekly Live Sessions', 'Free Trial Available',
+  'BonChat Platform', '5-Person Teams', 'Wednesday Night Zoom',
+  'Stock Market Access', 'Professor Daniel',
+];
+
+function Ticker() {
+  const doubled = [...TICKER, ...TICKER];
+  return (
+    <div className="ticker" aria-hidden="true">
+      <div className="ticker__track">
+        {doubled.map((item, i) => (
+          <span key={i} className="ticker__item">
+            {item}
+            <span className="ticker__dot" />
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ── Data ────────────────────────────────────────── */
 const features = [
-  {
-    icon: TrendingUp,
-    title: 'Automated Copy Trading',
-    desc: 'Automatically replicate trades from experienced traders with just one click — no active management required.',
-  },
-  {
-    icon: Shield,
-    title: 'Beginner-Friendly Setup',
-    desc: 'No prior trading experience needed. We guide you through every step with clarity and support.',
-  },
-  {
-    icon: Video,
-    title: 'Weekly Live Zoom Sessions',
-    desc: 'Professor Daniel hosts live Wednesday night sessions covering market insights, Q&A, and financial literacy.',
-  },
-  {
-    icon: Users,
-    title: 'Community Network',
-    desc: 'Connect with like-minded members at gatherings, weekend events, games, and team-building activities.',
-  },
-  {
-    icon: Award,
-    title: 'Leadership Growth',
-    desc: 'Develop real leadership skills through dedicated programs, mentorship, and team development opportunities.',
-  },
-  {
-    icon: BookOpen,
-    title: 'Financial Education',
-    desc: 'Grow your financial literacy with ongoing education, trading knowledge, and structured learning resources.',
-  },
+  { Icon: TrendingUp, title: 'Automated Copy Trading',  desc: 'Automatically replicate trades from experienced traders with a single click — no active management required.' },
+  { Icon: Shield,     title: 'Beginner-Friendly Setup', desc: 'No prior trading experience needed. We guide every new member through onboarding with patience and clarity.' },
+  { Icon: Video,      title: 'Weekly Live Sessions',    desc: 'Professor Daniel hosts live Wednesday Zoom sessions — market insights, strategy Q&A, and financial literacy.' },
+  { Icon: Users,      title: 'Community Network',       desc: 'Connect with members at weekend events, interactive games, team-building sessions, and networking gatherings.' },
+  { Icon: Award,      title: 'Leadership Growth',       desc: 'Develop real leadership through structured programs, mentorship, and team development opportunities.' },
+  { Icon: BookOpen,   title: 'Financial Education',     desc: 'Build lasting financial literacy through ongoing education, trading knowledge, and structured learning resources.' },
 ];
 
 const steps = [
-  { num: '01', title: 'Join The Community', desc: 'Register and connect with PO Wealth.' },
-  { num: '02', title: 'Setup Your Account', desc: 'Create and securely connect your trading account.' },
-  { num: '03', title: 'Start Copy Trading', desc: 'Automatically mirror trades from experienced traders.' },
-  { num: '04', title: 'Learn & Grow', desc: 'Participate in weekly trainings and community activities.' },
+  { n: '01', title: 'Join The Community',   desc: 'Register and connect with PO Wealth.' },
+  { n: '02', title: 'Setup Your Account',   desc: 'Create and securely connect your trading account.' },
+  { n: '03', title: 'Start Copy Trading',   desc: 'Automatically mirror trades from experienced traders.' },
+  { n: '04', title: 'Learn & Grow',         desc: 'Join weekly trainings and community activities.' },
 ];
 
 const testimonials = [
   {
-    text: 'PO Wealth completely changed how I approach investing. The copy trading feature made it easy to participate in the markets while I continued learning at my own pace.',
-    name: 'Michael A.',
-    initial: 'M',
+    initial: 'M', name: 'Michael A.',
+    text: 'PO Wealth changed how I approach investing entirely. The copy trading feature let me participate in markets while learning at my own pace — without the fear of making costly mistakes.',
   },
   {
-    text: "The Wednesday Zoom sessions with Professor Daniel are incredibly valuable. I've learned more in a few months here than years of trying to figure this out on my own.",
-    name: 'Sarah K.',
-    initial: 'S',
+    initial: 'S', name: 'Sarah K.',
+    text: "Professor Daniel's Wednesday sessions are worth every minute. I've absorbed more in three months here than in years of trying to figure this out solo.",
   },
   {
-    text: "I was nervous about trading at first, but the beginner-friendly setup and supportive community made everything simple. I'm growing my wealth and my confidence.",
-    name: 'Daniel T.',
-    initial: 'D',
+    initial: 'D', name: 'Daniel T.',
+    text: 'I was scared to start trading. The beginner-friendly setup and this community made it feel manageable from day one. My confidence has grown alongside my account.',
   },
 ];
 
 export default function HomePage() {
   return (
-    <>
+    <div className="page-wrapper">
+
       {/* ── HERO ── */}
       <section className="hero">
-        <div className="hero__bg">
-          <div className="hero__orb hero__orb--1" />
-          <div className="hero__orb hero__orb--2" />
-          <div className="hero__orb hero__orb--3" />
-          <div className="hero__grid" />
+        {/* Ambient blobs */}
+        <div className="hero__blob hero__blob--a" />
+        <div className="hero__blob hero__blob--b" />
+
+        {/* Ripple circles */}
+        <div className="hero__ripples">
+          <div className="hero__ripple hero__ripple--1" />
+          <div className="hero__ripple hero__ripple--2" />
+          <div className="hero__ripple hero__ripple--3" />
         </div>
 
-        <div className="container">
-          <div className="hero__layout">
-            {/* Left: content */}
-            <div>
-              <div className="eyebrow">Welcome to PO Wealth</div>
-              <h1 className="hero__title">
-                Build Wealth Together Through{' '}
-                <span className="text-gold">Smart Copy Trading</span>
-              </h1>
-              <p className="hero__subtitle">
-                PO Wealth combines copy trading, financial education, leadership growth, and a
-                supportive community to help members grow confidently in the financial markets.
-              </p>
-              <div className="hero__cta">
-                <Link to="/join-us" className="btn btn--gold btn--lg">
-                  Start Free Trial <ArrowRight size={18} />
-                </Link>
-                <Link to="/how-it-works" className="btn btn--outline btn--lg">
-                  How It Works
-                </Link>
-              </div>
-            </div>
+        {/* Grid */}
+        <div className="hero__grid" />
 
-            {/* Right: dashboard card */}
-            <div className="hero__visual">
-              <div className="hero__card">
-                <div className="hero__card-header">
-                  <span className="hero__card-dot" />
-                  <span className="hero__card-label">PO Wealth Platform</span>
-                  <span className="hero__card-badge">Live</span>
-                </div>
-                <div className="hero__card-body">
-                  <div className="hero__card-row">
-                    <span className="hero__card-row-label">Copy Trading Status</span>
-                    <span className="hero__card-row-value">● Active</span>
-                  </div>
-                  <div className="hero__card-row">
-                    <span className="hero__card-row-label">Market</span>
-                    <span className="hero__card-row-label" style={{ color: 'var(--text)' }}>Stock Market (NYSE)</span>
-                  </div>
+        <div className="hero__content">
+          <span className="eyebrow hero__eyebrow">PO Wealth · Financial Growth Community</span>
 
-                  <div className="hero__card-divider" />
+          <h1 className="hero__title">
+            Build Wealth<br />
+            <em>Together</em> Through<br />
+            Smart Copy Trading
+          </h1>
 
-                  {['Weekly Zoom Sessions', 'Community Support', 'Financial Education', 'Leadership Programs', 'Free Trial Available'].map(f => (
-                    <div key={f} className="hero__card-feature">
-                      <span className="hero__card-check">✓</span>
-                      <span>{f}</span>
-                    </div>
-                  ))}
+          <p className="hero__lead">
+            Copy trading, live education, leadership growth, and a real community —
+            all in one place to help you grow confidently in the financial markets.
+          </p>
 
-                  <div className="hero__card-footer">
-                    <Zap size={12} />
-                    <span>Powered by BonChat · Mon–Fri 9:30AM–3PM ET</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="hero__ctas">
+            <Link to="/join-us" className="btn btn--primary btn--lg">
+              Start Free Trial <ArrowRight size={17} />
+            </Link>
+            <Link to="/how-it-works" className="btn btn--outline btn--lg">
+              How It Works
+            </Link>
           </div>
+        </div>
+
+        <div className="hero__scroll">
+          <span className="hero__scroll-label">Scroll</span>
+          <div className="hero__scroll-line" />
         </div>
       </section>
 
+      {/* ── TICKER ── */}
+      <Ticker />
+
       {/* ── FEATURES ── */}
-      <section className="section bg-surface">
+      <section className="section bg-white">
         <div className="container">
-          <div className="section-header text-center">
-            <div className="eyebrow">What We Offer</div>
-            <h2 className="section-title">More Than Just Copy Trading</h2>
-            <div className="gold-divider" />
-            <p className="section-subtitle">
-              We enable members to automatically replicate trades from seasoned traders while
-              gaining market knowledge in a beginner-friendly, community-oriented environment.
+          <div className="section-header text-center reveal">
+            <span className="eyebrow">What We Offer</span>
+            <h2 className="h2">More Than Just Copy Trading</h2>
+            <div className="copper-rule copper-rule--center" />
+            <p className="lead max-640" style={{ marginTop: 12 }}>
+              We enable members to replicate trades from seasoned traders while building market
+              knowledge in a beginner-friendly, community-driven environment.
             </p>
           </div>
-          <div className="grid grid-3">
-            {features.map(f => (
-              <div key={f.title} className="feature-card">
-                <div className="feature-icon">
-                  <f.icon size={22} />
-                </div>
-                <div className="feature-title">{f.title}</div>
-                <div className="feature-desc">{f.desc}</div>
+
+          <div className="grid-3">
+            {features.map(({ Icon, title, desc }, i) => (
+              <div key={title} className={`feature-card reveal d${i + 1}`}>
+                <div className="feature-icon"><Icon size={22} /></div>
+                <div className="feature-title">{title}</div>
+                <div className="feature-desc">{desc}</div>
               </div>
             ))}
           </div>
@@ -162,26 +139,28 @@ export default function HomePage() {
       </section>
 
       {/* ── HOW IT WORKS ── */}
-      <section className="section">
+      <section className="section bg-surface">
         <div className="container">
-          <div className="section-header text-center">
-            <div className="eyebrow">Simple Process</div>
-            <h2 className="section-title">How PO Wealth Works</h2>
-            <div className="gold-divider" />
-            <p className="section-subtitle">Simple steps to get started confidently.</p>
+          <div className="section-header text-center reveal">
+            <span className="eyebrow">Simple Process</span>
+            <h2 className="h2">How PO Wealth Works</h2>
+            <div className="copper-rule copper-rule--center" />
+            <p className="lead max-640" style={{ marginTop: 12 }}>
+              Four straightforward steps to go from curious newcomer to active participant.
+            </p>
           </div>
 
-          <div className="steps">
+          <div className="steps-overview reveal d1">
             {steps.map(s => (
-              <div key={s.num} className="step">
-                <div className="step__number">{s.num}</div>
-                <h3 className="step__title">{s.title}</h3>
-                <p className="step__desc">{s.desc}</p>
+              <div key={s.n} className="step-item">
+                <div className="step-circle">{s.n}</div>
+                <div className="step-title">{s.title}</div>
+                <p className="step-desc">{s.desc}</p>
               </div>
             ))}
           </div>
 
-          <div className="text-center mt-xl">
+          <div className="text-center mt-xl reveal">
             <Link to="/how-it-works" className="btn btn--outline">
               Full Details <ChevronRight size={16} />
             </Link>
@@ -190,55 +169,57 @@ export default function HomePage() {
       </section>
 
       {/* ── EDUCATION SPOTLIGHT ── */}
-      <section className="section bg-surface">
+      <section className="section bg-white">
         <div className="container">
-          <div className="education-spotlight">
-            <div>
-              <div className="eyebrow">Live Education</div>
-              <h2 className="section-title">Weekly Live Zoom Sessions</h2>
-              <div className="gold-divider" style={{ margin: '20px 0' }} />
-              <p style={{ color: 'var(--text-muted)', lineHeight: '1.75', marginBottom: '24px', fontSize: '1.0625rem' }}>
-                Professor Daniel hosts live Wednesday night Zoom sessions covering market insights,
-                trading concepts, Q&amp;A, and financial literacy — open to all PO Wealth members,
-                no experience required.
+          <div className="edu-split">
+            <div className="reveal">
+              <span className="eyebrow">Live Education</span>
+              <h2 className="h2">Weekly Live Zoom Sessions</h2>
+              <div className="copper-rule" />
+              <p className="lead" style={{ maxWidth: 480, marginBottom: 24 }}>
+                Professor Daniel hosts live Wednesday night Zoom sessions covering market
+                insights, trading concepts, Q&amp;A, and financial literacy — open to every
+                member, no experience required.
               </p>
-              <div className="education-topics mb-xl">
-                {['Market Insights', 'Trading Concepts', 'Live Q&A', 'Market Updates', 'Financial Literacy', 'Member Success'].map(t => (
-                  <span key={t} className="topic-tag">{t}</span>
+              <div className="edu-tags mb-xl">
+                {['Market Insights','Trading Concepts','Live Q&A','Market Updates','Financial Literacy','Member Success'].map(t => (
+                  <span key={t} className="tag">{t}</span>
                 ))}
               </div>
-              <Link to="/education" className="btn btn--gold">
-                Learn More <ArrowRight size={16} />
+              <Link to="/education" className="btn btn--primary">
+                Explore Education <ArrowRight size={16} />
               </Link>
             </div>
 
-            <div className="zoom-card">
+            <div className="zoom-card reveal d2">
               <div className="zoom-card__header">
-                <Video size={20} className="zoom-card__icon" />
+                <div className="zoom-card__hicon"><Video size={18} /></div>
                 <div>
-                  <div className="zoom-card__title">Weekly Zoom Session</div>
-                  <div className="zoom-card__subtitle">Every Wednesday Night</div>
+                  <div className="zoom-card__htitle">Weekly Zoom Session</div>
+                  <div className="zoom-card__hsub">Every Wednesday Night</div>
                 </div>
               </div>
-              <div className="zoom-card__host">
-                <div className="zoom-card__avatar">PD</div>
-                <div>
-                  <div className="zoom-card__host-name">Professor Daniel</div>
-                  <div className="zoom-card__host-role">Lead Educator &amp; Host</div>
-                </div>
-              </div>
-              <div className="zoom-card__topics">
-                <div className="zoom-card__topic-label">Session Topics</div>
-                {['Live Market Analysis', 'Trading Strategy Q&A', 'Member Success Stories', 'Financial Literacy Deep-Dives'].map(t => (
-                  <div key={t} className="zoom-card__topic-item">
-                    <span className="zoom-card__bullet">◆</span>
-                    <span>{t}</span>
+              <div className="zoom-card__body">
+                <div className="zoom-card__host">
+                  <div className="zoom-card__avatar">PD</div>
+                  <div>
+                    <div className="zoom-card__hname">Professor Daniel</div>
+                    <div className="zoom-card__hrole">Lead Educator &amp; Host</div>
                   </div>
-                ))}
-              </div>
-              <div className="zoom-card__footer">
-                <Globe size={13} />
-                <span>Open to all PO Wealth members · No experience required</span>
+                </div>
+                <div className="zoom-card__topics">
+                  <div className="zoom-card__topic-label">Session Topics</div>
+                  {['Live Market Analysis', 'Trading Strategy Q&A', 'Member Success Stories', 'Financial Literacy Deep-Dives'].map(t => (
+                    <div key={t} className="zoom-card__row">
+                      <span className="zoom-card__row-dot" />
+                      {t}
+                    </div>
+                  ))}
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 16, fontSize: '0.78rem', color: 'var(--dim)' }}>
+                  <Globe size={13} />
+                  Open to all PO Wealth members
+                </div>
               </div>
             </div>
           </div>
@@ -246,23 +227,24 @@ export default function HomePage() {
       </section>
 
       {/* ── TESTIMONIALS ── */}
-      <section className="section">
+      <section className="section bg-surface">
         <div className="container">
-          <div className="section-header text-center">
-            <div className="eyebrow">Member Stories</div>
-            <h2 className="section-title">What Our Members Say</h2>
-            <div className="gold-divider" />
+          <div className="section-header text-center reveal">
+            <span className="eyebrow">Member Stories</span>
+            <h2 className="h2">What Our Members Say</h2>
+            <div className="copper-rule copper-rule--center" />
           </div>
-          <div className="grid grid-3">
-            {testimonials.map(t => (
-              <div key={t.name} className="testimonial">
+
+          <div className="grid-3">
+            {testimonials.map(({ initial, name, text }, i) => (
+              <div key={name} className={`testimonial-card reveal d${i + 1}`}>
                 <div className="stars">★★★★★</div>
-                <p className="testimonial__text">{t.text}</p>
-                <div className="testimonial__author">
-                  <div className="testimonial__avatar">{t.initial}</div>
+                <p className="t-text">{text}</p>
+                <div className="t-author">
+                  <div className="t-avatar">{initial}</div>
                   <div>
-                    <div className="testimonial__name">{t.name}</div>
-                    <div className="testimonial__role">PO Wealth Member</div>
+                    <div className="t-name">{name}</div>
+                    <div className="t-role">PO Wealth Member</div>
                   </div>
                 </div>
               </div>
@@ -271,22 +253,30 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA BANNER ── */}
+      {/* ── CTA FOREST ── */}
       <section className="section--sm">
         <div className="container">
-          <div className="cta-banner">
-            <div className="eyebrow" style={{ justifyContent: 'center' }}>Limited Time Offer</div>
-            <h2 className="cta-banner__title">Start Your Free Trial Today</h2>
-            <p className="cta-banner__text">
-              New members can experience the platform, educational environment, and community
-              support before fully committing — no cost, no risk.
+          <div className="cta-forest reveal">
+            <span className="cta-forest__eyebrow">Limited Time Offer</span>
+            <h2 className="cta-forest__title">
+              Start Your Free Trial <em>Today</em>
+            </h2>
+            <p className="cta-forest__text">
+              New members can explore the full platform — copy trading, live sessions, and
+              community — before making any commitment. No cost, no risk.
             </p>
-            <Link to="/join-us" className="btn btn--gold btn--xl">
-              Join PO Wealth Free <ArrowRight size={20} />
-            </Link>
+            <div className="cta-forest__btns">
+              <Link to="/join-us" className="btn btn--white btn--lg">
+                Join PO Wealth Free <ArrowRight size={18} />
+              </Link>
+              <Link to="/contact" className="btn btn--white-outline btn--lg">
+                Talk to Us First
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-    </>
+
+    </div>
   );
 }

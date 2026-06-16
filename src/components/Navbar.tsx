@@ -2,60 +2,70 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 
-const navLinks = [
-  { path: '/', label: 'Home' },
-  { path: '/about', label: 'About' },
-  { path: '/education', label: 'Education' },
-  { path: '/how-it-works', label: 'How It Works' },
-  { path: '/join-us', label: 'Join Us' },
-  { path: '/contact', label: 'Contact' },
+const links = [
+  { to: '/',            label: 'Home' },
+  { to: '/about',       label: 'About' },
+  { to: '/education',   label: 'Education' },
+  { to: '/how-it-works', label: 'How It Works' },
+  { to: '/join-us',     label: 'Join Us' },
+  { to: '/contact',     label: 'Contact' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
+  const [open, setOpen] = useState(false);
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  useEffect(() => { setMenuOpen(false); }, [location.pathname]);
+  // Lock body scroll while mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
+
+  // Close on route change or viewport resize past breakpoint
+  useEffect(() => { setOpen(false); }, [pathname]);
+  useEffect(() => {
+    const onResize = () => { if (window.innerWidth > 920) setOpen(false); };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   return (
     <nav className={`navbar${scrolled ? ' navbar--scrolled' : ''}`}>
-      <div className="navbar__container">
+      <div className="navbar__inner">
         <Link to="/" className="navbar__brand">
-          <span className="navbar__brand-gem">◆</span>
-          The <span className="text-gold" style={{ marginLeft: 4 }}>Wealth</span>&nbsp;Movement
+          The&nbsp;<em>Wealth</em>&nbsp;Movement
         </Link>
 
-        <ul className={`navbar__links${menuOpen ? ' navbar__links--open' : ''}`}>
-          {navLinks.map(link => (
-            <li key={link.path}>
+        <ul className={`navbar__nav${open ? ' navbar__nav--open' : ''}`}>
+          {links.map(l => (
+            <li key={l.to}>
               <Link
-                to={link.path}
-                className={`navbar__link${location.pathname === link.path ? ' navbar__link--active' : ''}`}
+                to={l.to}
+                className={`navbar__link${pathname === l.to ? ' navbar__link--active' : ''}`}
               >
-                {link.label}
+                {l.label}
               </Link>
             </li>
           ))}
-          <li>
-            <Link to="/join-us" className="btn btn--gold btn--sm" style={{ marginLeft: 8 }}>
-              Join Free
-            </Link>
+          <li className="navbar__cta">
+            <Link to="/join-us" className="btn btn--primary btn--sm">Join Free</Link>
           </li>
         </ul>
 
         <button
           className="navbar__toggle"
-          onClick={() => setMenuOpen(m => !m)}
-          aria-label="Toggle navigation"
+          onClick={() => setOpen(o => !o)}
+          aria-label="Toggle menu"
+          aria-expanded={open}
         >
-          {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          {open ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
     </nav>
