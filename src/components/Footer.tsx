@@ -21,11 +21,6 @@ export default function Footer() {
             <p className="footer__tagline">
               A financial growth community focused on education, copy trading, and building real wealth — together.
             </p>
-            <div className="footer__social">
-              <a href="#" className="footer__social-link" aria-label="Facebook">f</a>
-              <a href="#" className="footer__social-link" aria-label="Instagram">ig</a>
-              <a href="#" className="footer__social-link" aria-label="TikTok">tk</a>
-            </div>
           </div>
 
           <div>

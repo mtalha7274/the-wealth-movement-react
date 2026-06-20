@@ -106,25 +106,6 @@ export default function JoinUsPage() {
         </div>
       </section>
 
-      {/* ── BOTTOM CTA ── */}
-      <section className="section--sm bg-surface">
-        <div className="container">
-          <div className="cta-forest reveal">
-            <span className="cta-forest__eyebrow">Remember</span>
-            <h2 className="cta-forest__title">
-              Don't Wait — <em>Opportunities Won't</em>
-            </h2>
-            <p className="cta-forest__text">
-              "If someone keeps waiting for complete certainty, they usually miss out on time,
-              growth, and the potential income they could have already started building."
-            </p>
-            <Link to="/contact" className="btn btn--white btn--lg">
-              Get Started Today <ArrowRight size={18} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
     </div>
   );
 }

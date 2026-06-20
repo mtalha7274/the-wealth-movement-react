@@ -1,32 +1,57 @@
+import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import type { LucideIcon } from 'lucide-react';
 import {
   TrendingUp, Shield, Video, Users, Award, BookOpen,
   ArrowRight, Globe,
 } from 'lucide-react';
 
-/* ── Ticker ─────────────────────────────────────── */
-const TICKER_ITEMS = [
-  'Copy Trading', 'Financial Education', 'Community Growth',
-  'Leadership Development', 'Weekly Live Sessions', 'Free Trial Available',
-  'BonChat Platform', '5-Person Teams', 'Wednesday Night Zoom',
-  'Stock Market Access', 'Professor Daniel',
+const heroFeatures: {
+  key: string;
+  modifier: string;
+  label: string;
+  title: string;
+  text: string;
+  Icon: LucideIcon;
+  meta: string;
+}[] = [
+  {
+    key: 'copy',
+    modifier: 'orbit-card--copy',
+    label: 'Copy Trading',
+    title: 'Mirror expert moves automatically.',
+    text: 'Start with a guided setup and let the system follow active trading signals.',
+    Icon: TrendingUp,
+    meta: 'BonChat Platform',
+  },
+  {
+    key: 'team',
+    modifier: 'orbit-card--team',
+    label: 'Community',
+    title: 'Teams that keep you moving.',
+    text: 'A five-person structure creates accountability, learning, and real support.',
+    Icon: Users,
+    meta: 'Team Growth',
+  },
+  {
+    key: 'education',
+    modifier: 'orbit-card--education',
+    label: 'Education',
+    title: 'Financial literacy without confusion.',
+    text: 'Simple resources and live walkthroughs help new members understand the market.',
+    Icon: BookOpen,
+    meta: 'Beginner Friendly',
+  },
+  {
+    key: 'session',
+    modifier: 'orbit-card--session',
+    label: 'Live Sessions',
+    title: 'Wednesday Zoom with Professor Daniel.',
+    text: 'Weekly market insight, Q&A, and strategy for every experience level.',
+    Icon: Video,
+    meta: 'Every Week',
+  },
 ];
-
-function Ticker() {
-  const doubled = [...TICKER_ITEMS, ...TICKER_ITEMS];
-  return (
-    <div className="ticker" aria-hidden="true">
-      <div className="ticker__track">
-        {doubled.map((item, i) => (
-          <span key={i} className="ticker__item">
-            {item}
-            <span className="ticker__dot" />
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 /* ── Testimonials data ─────────────────────────── */
 const testimonials = [
@@ -45,29 +70,136 @@ const testimonials = [
 ];
 
 export default function HomePage() {
+  const mobileRailRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const rail = mobileRailRef.current;
+    if (!rail) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileMq = window.matchMedia('(max-width: 1080px)');
+
+    let currentIndex = 0;
+    let isPaused = false;
+    let isAutoScrolling = false;
+    let resumeTimeout: number | undefined;
+    let scrollSyncTimeout: number | undefined;
+    let intervalId: number | undefined;
+
+    const getCards = () => Array.from(rail.querySelectorAll<HTMLElement>('.hero-mobile__card'));
+
+    const getCardScrollLeft = (card: HTMLElement) => {
+      const track = card.parentElement;
+      if (!track) return 0;
+      return card.offsetLeft - track.offsetLeft;
+    };
+
+    const syncIndexToScroll = () => {
+      const cards = getCards();
+      if (!cards.length) return;
+
+      currentIndex = cards.reduce((closestIndex, card, index) => {
+        const closestDistance = Math.abs(getCardScrollLeft(cards[closestIndex]) - rail.scrollLeft);
+        const cardDistance = Math.abs(getCardScrollLeft(card) - rail.scrollLeft);
+        return cardDistance < closestDistance ? index : closestIndex;
+      }, 0);
+    };
+
+    const pauseAutoScroll = () => {
+      if (isAutoScrolling) return;
+
+      isPaused = true;
+      window.clearTimeout(resumeTimeout);
+      resumeTimeout = window.setTimeout(() => {
+        syncIndexToScroll();
+        isPaused = false;
+      }, 5000);
+    };
+
+    const scrollToIndex = (index: number) => {
+      const cards = getCards();
+      if (!cards.length || !mobileMq.matches) return;
+
+      currentIndex = ((index % cards.length) + cards.length) % cards.length;
+      isAutoScrolling = true;
+      rail.scrollTo({ left: getCardScrollLeft(cards[currentIndex]), behavior: 'smooth' });
+      window.setTimeout(() => {
+        isAutoScrolling = false;
+      }, 600);
+    };
+
+    const tick = () => {
+      if (!isPaused && mobileMq.matches && !reducedMotion.matches) {
+        scrollToIndex(currentIndex + 1);
+      }
+    };
+
+    const stopAutoScroll = () => {
+      window.clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const startAutoScroll = () => {
+      stopAutoScroll();
+      if (!mobileMq.matches || reducedMotion.matches) return;
+      syncIndexToScroll();
+      intervalId = window.setInterval(tick, 3500);
+    };
+
+    const onScroll = () => {
+      window.clearTimeout(scrollSyncTimeout);
+      scrollSyncTimeout = window.setTimeout(syncIndexToScroll, 80);
+      if (!isAutoScrolling) pauseAutoScroll();
+    };
+
+    const onLayoutChange = () => {
+      if (mobileMq.matches) startAutoScroll();
+      else stopAutoScroll();
+    };
+
+    rail.addEventListener('pointerdown', pauseAutoScroll, { passive: true });
+    rail.addEventListener('touchstart', pauseAutoScroll, { passive: true });
+    rail.addEventListener('wheel', pauseAutoScroll, { passive: true });
+    rail.addEventListener('scroll', onScroll, { passive: true });
+    mobileMq.addEventListener('change', onLayoutChange);
+    reducedMotion.addEventListener('change', onLayoutChange);
+
+    onLayoutChange();
+
+    return () => {
+      stopAutoScroll();
+      window.clearTimeout(resumeTimeout);
+      window.clearTimeout(scrollSyncTimeout);
+      rail.removeEventListener('pointerdown', pauseAutoScroll);
+      rail.removeEventListener('touchstart', pauseAutoScroll);
+      rail.removeEventListener('wheel', pauseAutoScroll);
+      rail.removeEventListener('scroll', onScroll);
+      mobileMq.removeEventListener('change', onLayoutChange);
+      reducedMotion.removeEventListener('change', onLayoutChange);
+    };
+  }, []);
+
   return (
     <div className="page-wrapper">
 
       {/* ══ HERO ══════════════════════════════════════════ */}
       <section className="hero">
 
-        {/* Left — editorial typography column */}
         <div className="hero__left">
           <div className="hero__badge">
             <span className="hero__badge-dot" />
-            PO Wealth · Financial Growth Community
+            Live education · Copy trading · Community<span className="hero__badge-growth"> growth</span>
           </div>
 
           <h1 className="hero__title">
-            <span className="hero__line"><span>Build Wealth,</span></span>
             <span className="hero__line">
-              <span>Grow <em className="hero__title-accent">Together.</em></span>
+              <span>The <em className="hero__title-accent">Wealth</em> Movement.</span>
             </span>
           </h1>
 
           <p className="hero__lead">
-            Copy trading, live education, and a genuine community — all in one place
-            so you can grow confidently in the financial markets, starting free.
+            A refined financial growth community where beginner-friendly copy trading,
+            weekly live education, and real accountability work together from day one.
           </p>
 
           <div className="hero__ctas">
@@ -78,64 +210,58 @@ export default function HomePage() {
               How It Works
             </Link>
           </div>
-
-          <div className="hero__scroll">
-            <span className="hero__scroll-label">Scroll</span>
-            <div className="hero__scroll-line" />
-          </div>
         </div>
 
-        {/* Right — forest green panel with floating platform cards */}
         <div className="hero__right">
-          <div className="hero-cards">
-
-            {/* Back card — faintest, most tilted */}
-            <div className="hero-pcard hero-pcard--back">
-              <div className="pcard-header">
-                <span className="pcard-tag">Community</span>
+          <div className="hero-orbit hero-orbit--desktop" aria-label="PO Wealth platform highlights">
+            <div className="orbit-core">
+              <div>
+                <span className="orbit-core__kicker">PO Wealth System</span>
+                <div className="orbit-core__title">Learn. Copy. Grow.</div>
+                <p className="orbit-core__text">
+                  One guided environment for market access, education, and community momentum.
+                </p>
               </div>
-              <div className="pcard-name">PO Wealth</div>
-              <div className="pcard-sub">Financial Growth Community</div>
             </div>
 
-            {/* Mid card — zoom session */}
-            <div className="hero-pcard hero-pcard--mid">
-              <div className="pcard-zoom-top">
-                <div className="pcard-zoom-icon"><Video size={14} /></div>
-                <div>
-                  <div className="pcard-zoom-name">Wednesday Zoom</div>
-                  <div className="pcard-zoom-when">Every week · 8 PM</div>
+            {heroFeatures.map(({ key, modifier, label, title, text, Icon, meta }) => (
+              <div key={key} className={`orbit-card-wrap ${modifier}`} tabIndex={0}>
+                <div className="orbit-card">
+                  <div className="orbit-card__label">{label}</div>
+                  <div className="orbit-card__title">{title}</div>
+                  <p className="orbit-card__text">{text}</p>
+                  <div className="orbit-card__meta"><Icon size={15} /> {meta}</div>
                 </div>
               </div>
-              <div className="pcard-zoom-body">
-                Live session with Professor Daniel — market insights, Q&amp;A, and financial strategy.
-              </div>
+            ))}
+          </div>
+
+          <div className="hero-mobile" aria-label="PO Wealth mobile highlights">
+            <div className="hero-mobile__featured">
+              <span className="hero-mobile__kicker">PO Wealth System</span>
+              <div className="hero-mobile__title">Learn. Copy. Grow.</div>
+              <p className="hero-mobile__text">
+                One guided environment for market access, education, and community momentum.
+              </p>
             </div>
 
-            {/* Front card — copy trading, most detail */}
-            <div className="hero-pcard hero-pcard--front">
-              <div className="pcard-header">
-                <span className="pcard-live" />
-                <span className="pcard-tag"><strong>Copy Trading</strong> · Active</span>
-              </div>
-              <div className="pcard-name">Auto Copy Trading</div>
-              <div className="pcard-sub">BonChat Platform</div>
-              <div className="pcard-list">
-                {['1-click setup', 'Auto-mirrors expert trades', 'No experience needed', 'Free to start'].map(item => (
-                  <div key={item} className="pcard-item">
-                    <span className="pcard-check">✓</span>
-                    {item}
-                  </div>
-                ))}
+            <p className="hero-mobile__hint">Swipe through the platform</p>
+
+            <div className="hero-mobile__rail-wrap" ref={mobileRailRef}>
+              <div className="hero-mobile__rail">
+              {heroFeatures.map(({ key, label, title, text, Icon, meta }) => (
+                <div key={key} className="hero-mobile__card">
+                  <div className="hero-mobile__card-label">{label}</div>
+                  <div className="hero-mobile__card-title">{title}</div>
+                  <p className="hero-mobile__card-text">{text}</p>
+                  <div className="hero-mobile__card-meta"><Icon size={15} /> {meta}</div>
+                </div>
+              ))}
               </div>
             </div>
-
           </div>
         </div>
       </section>
-
-      {/* ══ TICKER ══════════════════════════════════════ */}
-      <Ticker />
 
       {/* ══ FEATURES — BENTO GRID ══════════════════════ */}
       <section className="section bg-white">
@@ -143,13 +269,13 @@ export default function HomePage() {
           <div className="section-header reveal">
             <span className="eyebrow">What We Offer</span>
             <h2 className="h2">
-              More Than Just{' '}
-              <em style={{ fontStyle: 'italic', color: 'var(--copper)' }}>Copy Trading</em>
+              A Complete Growth System,{' '}
+              <em style={{ fontStyle: 'italic', color: 'var(--copper)' }}>Not Just Signals</em>
             </h2>
             <div className="copper-rule" />
-            <p className="lead" style={{ maxWidth: 500, marginTop: 12 }}>
-              A complete financial growth ecosystem — trading, education, community,
-              and leadership in one place.
+            <p className="lead" style={{ maxWidth: 560, marginTop: 12 }}>
+              Trading access, live education, community structure, and leadership development
+              designed to make growth feel clear instead of chaotic.
             </p>
           </div>
 
@@ -328,7 +454,6 @@ export default function HomePage() {
       <section className="section--sm">
         <div className="container">
           <div className="cta-forest reveal">
-            <span className="cta-forest__eyebrow">Limited Time Offer</span>
             <h2 className="cta-forest__title">
               Start Your Free Trial <em>Today</em>
             </h2>

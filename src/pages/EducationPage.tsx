@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 import { CheckCircle, Video, Calendar, Users, ArrowRight } from 'lucide-react';
+import poWealthLogo from '../assets/po-wealth-sharing.png';
+import poWealthInfo from '../assets/po-wealth-sharing-info.png';
 
 const benefits = [
-  'Quick response to changes in the market',
-  'Efficient, flexible operations',
-  'Full utilization of member skills and experience',
-  'Enhanced creativity and execution',
-  'Faster decision-making and greater agility',
-  'Stronger trust and team cohesion',
+  'Shared learning through the 5-person duplication system',
+  'Weekly Wednesday Zoom sessions with Professor Daniel',
+  'Guided BonChat copy trading setup from day one',
+  'Weekend events, team building, and community gatherings',
+  'Leadership growth as your network expands',
+  'PO Wealth Sharing reward levels for team builders',
 ];
 
 const activities = ['Weekend Events', 'Interactive Games', 'Leadership Programs', 'Team Building', 'Networking Events', 'Community Gatherings'];
@@ -109,6 +111,39 @@ export default function EducationPage() {
                   {activities.map(a => <span key={a} className="tag">{a}</span>)}
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── PO WEALTH SHARING ── */}
+      <section id="po-wealth-sharing" className="section bg-surface">
+        <div className="container">
+          <div className="wealth-sharing-intro reveal">
+            <div className="wealth-sharing-intro__logo">
+              <img
+                src={poWealthLogo}
+                alt="PO Wealth Sharing logo with the tagline Standards Define Who We Become"
+              />
+            </div>
+            <div className="wealth-sharing-intro__copy">
+              <span className="eyebrow">PO Wealth Sharing</span>
+              <h2 className="h2">Build Your Agent Network</h2>
+              <div className="copper-rule" />
+              <p className="lead" style={{ marginTop: 12 }}>
+                The five-person duplication framework extends into structured team growth —
+                unlock weekly income and promotion rewards across ten achievement levels.
+              </p>
+            </div>
+          </div>
+
+          <div className="media-showcase media-showcase--wide reveal d2" style={{ marginTop: 40 }}>
+            <div className="media-showcase__frame">
+              <img
+                src={poWealthInfo}
+                alt="PO Wealth Sharing level chart showing LV1 through LV10 direct members, team members, weekly salary, and promotion bonus rewards"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>

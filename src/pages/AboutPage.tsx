@@ -1,5 +1,4 @@
-import { Link } from 'react-router-dom';
-import { BookOpen, Users, Award, Lightbulb, Heart, ArrowRight } from 'lucide-react';
+import { BookOpen, Users, Award, Lightbulb, Heart } from 'lucide-react';
 
 const focusAreas = [
   { Icon: BookOpen,   title: 'Financial Education',  desc: 'Structured learning to help members understand markets, trading strategies, and long-term wealth building.' },
@@ -37,10 +36,6 @@ export default function AboutPage() {
               <span className="eyebrow">Who We Are</span>
               <h2 className="h2">PO Wealth</h2>
               <div className="copper-rule" />
-              <p className="lead" style={{ marginBottom: 20 }}>
-                PO Wealth is a financial growth community designed to help individuals
-                participate in the financial markets through simplified copy trading and education.
-              </p>
               <p style={{ fontSize: '1.0625rem', color: 'var(--muted)', lineHeight: 1.78 }}>
                 Our goal is to create an environment where members can learn, connect, and
                 grow together — making the financial markets accessible to everyone, regardless
@@ -82,22 +77,6 @@ export default function AboutPage() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── CTA ── */}
-      <section className="section--sm bg-white">
-        <div className="container">
-          <div className="cta-forest reveal">
-            <h2 className="cta-forest__title">Ready to Join Our Community?</h2>
-            <p className="cta-forest__text">
-              Experience the PO Wealth difference — education, community, and opportunity
-              together in one place.
-            </p>
-            <Link to="/join-us" className="btn btn--white btn--lg">
-              Start Free Trial <ArrowRight size={18} />
-            </Link>
           </div>
         </div>
       </section>
