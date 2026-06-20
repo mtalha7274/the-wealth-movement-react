@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 const navLinks = [
   { to: '/',              label: 'Home' },
@@ -16,7 +17,12 @@ export default function Footer() {
         <div className="footer__main">
           <div>
             <Link to="/" className="footer__brand">
-              The&nbsp;<em>Wealth</em>&nbsp;Movement
+              <span className="footer__brand-logo-wrap">
+                <img src={logo} alt="" className="footer__brand-logo" />
+              </span>
+              <span className="footer__brand-text">
+                The&nbsp;<em>Wealth</em>&nbsp;Movement
+              </span>
             </Link>
             <p className="footer__tagline">
               A financial growth community focused on education, copy trading, and building real wealth — together.

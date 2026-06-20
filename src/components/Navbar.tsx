@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import logo from '../assets/logo.png';
 
 const links = [
   { to: '/',            label: 'Home' },
@@ -39,7 +40,10 @@ export default function Navbar() {
     <nav className={`navbar${scrolled ? ' navbar--scrolled' : ''}${open ? ' navbar--open' : ''}`}>
       <div className="navbar__inner">
         <Link to="/" className="navbar__brand">
-          The&nbsp;<em>Wealth</em>&nbsp;Movement
+          <img src={logo} alt="" className="navbar__brand-logo" />
+          <span className="navbar__brand-text">
+            The&nbsp;<em>Wealth</em>&nbsp;Movement
+          </span>
         </Link>
 
         <ul id="site-navigation" className={`navbar__nav${open ? ' navbar__nav--open' : ''}`}>
